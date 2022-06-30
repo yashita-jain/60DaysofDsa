@@ -242,6 +242,18 @@ void PostOrder(TreeNode<int> *root)
     cout << root->data << endl;
 }
 
+
+
+void DeleteTree(TreeNode<int> *root)
+{
+
+    for (int i = 0; i < root->children.size(); i++)
+    {
+        DeleteTree(root->children[i]);
+    }
+delete root;
+}
+
 int main()
 {
     // TreeNode <int>* root=new TreeNode<int>(10);
@@ -253,8 +265,9 @@ int main()
     TreeNode<int> *root = takeInputLevelWise();
     // printLevelwise(root);
 
-    PostOrder(root);
+    // PostOrder(root);
     //  PrintTreeAtLevelK(root,1);
+     DeleteTree(root);
 
     return 0;
 }
