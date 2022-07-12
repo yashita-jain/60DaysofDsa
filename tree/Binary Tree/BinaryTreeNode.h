@@ -23,3 +23,4 @@ public:
         delete right;
     };
 };
+
