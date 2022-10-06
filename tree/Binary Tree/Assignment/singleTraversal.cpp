@@ -3,7 +3,6 @@
 using namespace std;
 #include "../BinaryTreeNode.h"
 
-
 BinaryTreeNode<int> *takeInputLevelWise()
 {
     cout << "Enter the data of root" << endl;
@@ -41,66 +40,69 @@ BinaryTreeNode<int> *takeInputLevelWise()
     return root;
 }
 
+void singleTraversal(BinaryTreeNode<int> *root, vector<int> &preorder, vector<int> &inorder, vector<int> &postorder)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    stack<pair<BinaryTreeNode<int> *, int>> s;
+    s.push({root, 1});
+    while (s.size() != 0)
+    {
+        auto it = s.top();
+        s.pop();
+        if (it.second == 1)
+        {
+            preorder.push_back(it.first->data);
+            it.second++;
+            s.push(it);
+            if (root->left != NULL)
+            {
+                s.push({root->left, 1});
+            }
+        }
+        else if (it.second == 2)
+        {
+            inorder.push_back(it.first->data);
+            it.second++;
+            s.push(it);
 
-
-void singleTraversal(BinaryTreeNode<int>* root,vector <int> & preorder,vector <int>& inorder,vector <int>& postorder){
-if(root==NULL){
-    return;
+            if (root->right != NULL)
+            {
+                s.push({root->right, 1});
+            }
+        }
+        else
+        {
+            postorder.push_back(it.first->data);
+        }
+    }
 }
-stack<pair<BinaryTreeNode<int>*, int> > s;
-s.push({root,1});
-while(s.size()!=0){
-    auto it=s.top();
-    s.pop();
-    if(it.second==1){
-        preorder.push_back(it.first->data);
-        it.second++;
-        s.push(it);
-     if(root->left!=NULL){
-         s.push({root->left,1});
-     }
-
-     }
-     else if(it.second==2){
-      inorder.push_back(it.first->data);
-      it.second++;
-        s.push(it);
-    
-     if(root->right!=NULL){
-         s.push({root->right,1});
-     }
-     }
-     else{
-         postorder.push_back(it.first->data);
-      }
-
-}
-
-}
-
-
-
 
 int main()
 {
-BinaryTreeNode<int>* root= takeInputLevelWise();
+    BinaryTreeNode<int> *root = takeInputLevelWise();
 
-vector <int> preorder;
-vector <int> postorder;
-vector <int> inorder;
-singleTraversal(root,preorder,inorder,postorder);
-for(int i=0;i<preorder.size();i++){
-       cout<<preorder[i]<<" ";
-   }
-    cout<<endl;
-    for(int i=0;i<postorder.size();i++){
-       cout<<postorder[i]<<" ";
-   }
-    cout<<endl;
-    for(int i=0;i<inorder.size();i++){
-       cout<<inorder[i]<<" ";
-   }
-    cout<<endl;
-delete root;
-return 0;
+    vector<int> preorder;
+    vector<int> postorder;
+    vector<int> inorder;
+    singleTraversal(root, preorder, inorder, postorder);
+    for (int i = 0; i < preorder.size(); i++)
+    {
+        cout << preorder[i] << " ";
+    }
+    cout << endl;
+    for (int i = 0; i < postorder.size(); i++)
+    {
+        cout << postorder[i] << " ";
+    }
+    cout << endl;
+    for (int i = 0; i < inorder.size(); i++)
+    {
+        cout << inorder[i] << " ";
+    }
+    cout << endl;
+    delete root;
+    return 0;
 }
